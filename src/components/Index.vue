@@ -2,12 +2,12 @@
   <div class="container">
     <PageHeader>API Client</PageHeader>
     <div class="row">
-      <div class="col-md-4">
-        <History/>
-      </div>
-      <div class="col-md-8">
+      <div class="col-md-7">
         <Request :request="request" @send="send" @reset="reset"/>
         <Response :response="response"/>
+      </div>
+      <div class="col-md-5">
+        <History :calls="calls" @select="selectCall" @remove="removeCall"/>
       </div>
     </div>
   </div>
@@ -19,6 +19,7 @@ import History from './History.vue'
 import Request from './Request.vue'
 import Response from './Response.vue'
 
+import db from '../services/database'
 import ApiCaller from '../services/ApiCaller'
 const apiCaller = new ApiCaller()
 
@@ -31,22 +32,48 @@ export default {
       request: {
         method: 'GET',
         url: 'http://jsonplaceholder.typicode.com/posts/1',
-        body: ''
+        text: ''
       },
       response: {}
     }
   },
+  firebase: {
+    calls: db.ref('calls').limitToLast(20)
+  },
   methods: {
     send () {
       console.log('# send()')
+      if (this.request.text.trim()) {
+        try {
+          this.request.body = JSON.parse(this.request.text)
+        } catch (err) {
+          return window.alert(err)
+        }
+      }
       apiCaller.call(this.request, (err, response) => {
         if (err) return window.alert(err)
         this.response = response
+        this.createCall({
+          date: Date(),
+          req: this.request,
+          res: this.response
+        })
       })
     },
-    reset() {
-      console.log('# reset()')
+    reset () {
       this.response = {}
+      console.log('# reset()')
+    },
+    selectCall (call) {
+      this.request = Object.assign({}, call.req)
+      this.response = Object.assign({}, call.res)
+    },
+    createCall (call) {
+      this.$firebaseRefs.calls.push(call)
+    },
+    removeCall (call) {
+      console.log('# removeCall()')
+      this.$firebaseRefs.calls.child(call['.key']).remove()
     }
   }
 }

@@ -19,8 +19,8 @@
           <input id="url" type="text" class="form-control" v-model="request.url"/>
         </div>
         <div class="form-group">
-          <label for="body">Body</label>
-          <textarea id="body" class="form-control" rows="3" v-model="request.body"/>
+          <label for="text">Body</label>
+          <textarea id="text" class="form-control" rows="3" v-model="request.text"/>
         </div>
         <div class="text-right">
           <div class="btn-group">
