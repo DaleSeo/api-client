@@ -1,17 +1,15 @@
 <template>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h4>History</h4>
+      HISTORY
     </div>
-    <div class="panel-body">
-      <ul class="list-group">
-        <li class="list-group-item" :title="call.date" v-for="call in rCalls">
-          <span class="label" :class="className(call.req.method)">{{call.req.method}}</span>
-          <em @click="select(call)">{{call.req.url}}</em>
-          <button class="close" @click="remove(call)">&times;</button>
-        </li>
-      </ul>
-    </div>
+    <ul class="list-group">
+      <li class="list-group-item" :title="call.date" v-for="call in rCalls">
+        <span class="label" :class="className(call.req.method)">{{call.req.method}}</span>
+        &nbsp;<em @click="select(call)">{{call.req.url}}</em>
+        <button class="close" @click="remove(call)">&times;</button>
+      </li>
+    </ul>
   </div>
 </template>
 

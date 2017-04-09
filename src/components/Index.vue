@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <PageHeader>API Client</PageHeader>
     <div class="row">
       <div class="col-md-7">
         <Request :request="request" @send="send" @reset="reset"/>
@@ -14,10 +13,9 @@
 </template>
 
 <script>
-import PageHeader from './PageHeader.vue'
-import History from './History.vue'
 import Request from './Request.vue'
 import Response from './Response.vue'
+import History from './History.vue'
 
 import db from '../services/database'
 import ApiCaller from '../services/ApiCaller'
@@ -25,7 +23,7 @@ const apiCaller = new ApiCaller()
 
 export default {
   components: {
-    PageHeader, History, Request, Response
+    Request, Response, History,
   },
   data () {
     return {

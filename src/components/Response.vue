@@ -1,13 +1,27 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4>Response</h4>
+  <div>
+    <h4>RESPONSE</h4>
+    <hr/>
+
+    <div class="alert" :class="className">
+      <span v-if="response.statusCode">{{response.statusCode}} {{response.statusText}}</span>
+      <span v-else>HTTP Status</span>
     </div>
-    <div class="panel-body">
-      <div class="alert" :class="className" v-if="response.statusCode">
-        {{response.statusCode}} {{response.statusText}}
+
+    <ul class="nav nav-tabs">
+      <li :class="{active: tab === 'headers'}"><a href="#headers" @click="tab = 'headers'">Headers</a></li>
+      <li :class="{active: tab === 'body'}"><a href="#body" @click="tab = 'body'">Body</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="headers" v-show="tab === 'headers'">
+        <pre v-if="response.headers" v-text="response.headers"/>
+        <pre v-else>&nbsp;</pre>
       </div>
-      <pre v-if="response.body" v-text="response.body"/>
+      <div id="body" v-show="tab === 'body'">
+        <pre v-if="response.body" v-text="response.body"/>
+        <pre v-else>&nbsp;</pre>
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +37,11 @@ export default {
         case 5: return 'alert-danger'
         default: return 'alert-info'
       }
+    }
+  },
+  data () {
+    return {
+      tab: 'body'
     }
   }
 }
