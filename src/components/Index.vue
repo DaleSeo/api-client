@@ -67,6 +67,7 @@ export default {
       this.response = Object.assign({}, call.res)
     },
     createCall (call) {
+      console.log('call:', call)
       this.$firebaseRefs.calls.push(call)
     },
     removeCall (call) {

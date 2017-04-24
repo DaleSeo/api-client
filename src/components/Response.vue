@@ -4,7 +4,7 @@
     <hr/>
 
     <div class="alert" :class="className">
-      <span v-if="response.statusCode">{{response.statusCode}} {{response.statusText}}</span>
+      <span v-if="response.statusCode">{{response.statusCode}} {{response.statusMessage}}</span>
       <span v-else>HTTP Status</span>
     </div>
 
