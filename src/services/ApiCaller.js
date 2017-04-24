@@ -3,8 +3,8 @@ import superagent from 'superagent'
 export default class ApiCaller {
 
   call (req, callback) {
-    return superagent(req.method, req.url)
-      .send(req.body)
+    return superagent('POST', 'https://call-api.herokuapp.com')
+      .send(req)
       .end((err, res) => {
         if (err) return callback(err)
         let response = {
