@@ -1,15 +1,11 @@
 <template>
-  <nav class="navbar navbar-default navbar-static-top">
+  <b-navbar toggleable type="inverse" variant="inverse">
     <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#"><i class="fa fa-circle-o-notch fa-spin"></i> API Client</a>
-      </div>
+      <b-nav-toggle target="nav_collapse"></b-nav-toggle>
+      <b-link class="navbar-brand" to="#">
+        <i class="fa fa-paper-plane"></i>
+        <strong>API Client</strong>
+      </b-link>
     </div>
-  </nav>
+  </b-navbar>
 </template>

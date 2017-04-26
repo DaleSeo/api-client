@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-md-7">
         <Request :request="request" @send="send" @reset="reset"/>
+        <br/>
         <Response :response="response"/>
       </div>
       <div class="col-md-5">
@@ -36,7 +37,7 @@ export default {
     }
   },
   firebase: {
-    calls: db.ref('calls').limitToLast(20)
+    calls: db.ref('calls')
   },
   methods: {
     send () {

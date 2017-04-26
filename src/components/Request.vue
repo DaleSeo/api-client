@@ -1,39 +1,42 @@
 <template>
-  <div>
-    <h4>REQUEST</h4>
-    <hr/>
+  <form @submit.prevent="send" @reset="reset">
+    <b-card showHeader class="mb-3">
+      <strong slot="header">
+        <i class="fa fa-arrow-circle-right"/> Request
+      </strong>
 
-    <form @submit.prevent="send" @reset="reset">
-      <div class="form-group">
-        <label for="method">Method</label>
-        <select id="method" class="form-control" v-model="request.method">
-          <option>GET</option>
-          <option>POST</option>
-          <option>PUT</option>
-          <option>DELETE</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="url">URL</label>
-        <input id="url" type="text" class="form-control" v-model="request.url"/>
+      <div class="form-group row">
+        <div class="col-md-2">
+          <b-form-select v-model="request.method" :options="options"/>
+        </div>
+        <div class="col-md-10">
+          <input id="url" type="text" class="form-control" v-model="request.url"/>
+        </div>
       </div>
       <div class="form-group">
         <label for="text">Body</label>
-        <textarea id="text" class="form-control" rows="3" v-model="request.text"/>
+        <b-form-input id="text" textarea :rows="3" v-model="request.text"/>
       </div>
-      <div class="text-right">
-        <div class="btn-group">
-          <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Send</button>
-          <button type="reset" class="btn btn-default"><i class="fa fa-undo"></i> Reset</button>
-        </div>
-      </div>
-    </form>
-  </div>
+    </b-card>
+    <div class="text-right">
+      <b-button type="submit" variant="primary">
+        <i class="fa fa-paper-plane-o"/> Send
+      </b-button>
+      <b-button type="reset" variant="secondary">
+        <i class="fa fa-undo"/> Reset
+      </b-button>
+    </div>
+  </form>
 </template>
 
 <script>
 export default {
   props: ['request'],
+  data() {
+    return {
+      options: ['GET', 'POST', 'PUT', 'DELETE']
+    }
+  },
   methods: {
     send () {
       this.$emit('send')

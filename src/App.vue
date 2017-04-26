@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Navbar/>
+    <br/>
     <Index/>
   </div>
 </template>

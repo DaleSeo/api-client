@@ -1,34 +1,26 @@
 <template>
-  <div>
-    <h4>RESPONSE</h4>
-    <hr/>
+  <b-card no-block showHeader>
+    <strong slot="header">
+      <i class="fa fa-arrow-circle-left"/> Response
+    </strong>
 
-    <div class="alert" :class="className">
-      <span v-if="response.statusCode">{{response.statusCode}} {{response.statusMessage}}</span>
-      <span v-else>HTTP Status</span>
-    </div>
-
-    <ul class="nav nav-tabs">
-      <li :class="{active: tab === 'headers'}"><a href="#headers" @click="tab = 'headers'">Headers</a></li>
-      <li :class="{active: tab === 'body'}"><a href="#body" @click="tab = 'body'">Body</a></li>
-    </ul>
-
-    <div class="tab-content">
-      <div id="headers" v-show="tab === 'headers'">
-        <pre v-if="response.headers" v-text="response.headers"/>
-        <pre v-else>&nbsp;</pre>
-      </div>
-      <div id="body" v-show="tab === 'body'">
-        <pre v-if="response.body" v-text="response.body"/>
-        <pre v-else>&nbsp;</pre>
-      </div>
-    </div>
-  </div>
+    <b-tabs small card ref="tabs" v-model="tabIndex">
+      <b-tab title="Status">
+        {{response.statusCode}} {{response.statusMessage}}
+      </b-tab>
+      <b-tab title="Headers">
+        <pre>{{response.headers}}</pre>
+      </b-tab>
+      <b-tab title="Body">
+        <pre>{{response.body}}</pre>
+      </b-tab>
+    </b-tabs>
+  </b-card>
 </template>
 
 <script>
 export default {
-  props: ["response"],
+  props: ['response'],
   computed: {
     className () {
       switch (this.response.statusCode / 100) {
@@ -41,6 +33,7 @@ export default {
   },
   data () {
     return {
+      tabIndex: null,
       tab: 'body'
     }
   }
