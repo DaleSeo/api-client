@@ -9,7 +9,9 @@
           @reset="reset"
         />
         <br/>
-        <Response :response="response"/>
+        <Response
+          :response="response"
+        />
       </div>
       <div class="col-md-5">
         <History :calls="calls" @select="selectCall" @remove="removeCall"/>
@@ -29,8 +31,7 @@ toastr.options = {
 }
 
 import db from '../services/database'
-import ApiCaller from '../services/ApiCaller'
-const apiCaller = new ApiCaller()
+import callApi from '../services/callApi'
 
 export default {
   components: {
@@ -40,7 +41,7 @@ export default {
     return {
       request: {
         method: 'GET',
-        url: 'http://jsonplaceholder.typicode.com/posts/1',
+        url: '',
         text: ''
       },
       response: {},
@@ -61,22 +62,32 @@ export default {
         }
       }
       this.inProgress = true
-      apiCaller.call(this.request, (err, response) => {
-        if (err) return window.alert(err)
-        this.response = response
-        this.createCall({
-          date: new Date(),
-          req: this.request,
-          res: this.response
+      callApi(this.request)
+        .then(response => {
+          console.log('response:', response)
+          if (response.error) {
+            toastr.error('Failed to call!')
+          } else {
+            toastr.success('Successfully called.')
+          }
+          this.response = response
+          let call = {
+            date: new Date().getTime(),
+            req: this.request,
+            res: this.response
+          }
+          this.createCall(call)
+          this.inProgress = false
         })
-        toastr.success('Successfully Called!')
-        this.inProgress = false
-      })
+        .catch(err => {
+          console.error('err:', err)
+          window.alert(err)
+        })
     },
     reset () {
       console.log('Index#reset')
       this.response = {}
-      toastr.success('Reset!')
+      toastr.success('Reset.')
     },
     selectCall (call) {
       console.log('Index#selectCall', call)
@@ -90,7 +101,7 @@ export default {
     removeCall (call) {
       console.log('Index#removeCall', call)
       this.$firebaseRefs.calls.child(call['.key']).remove()
-        .then(_ => toastr.success('Removed!'))
+        .then(_ => toastr.success('Removed.'))
         .catch(err => toastr.error(err))
     }
   }

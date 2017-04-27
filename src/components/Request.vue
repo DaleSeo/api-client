@@ -10,7 +10,7 @@
           <b-form-select v-model="request.method" :options="options"/>
         </div>
         <div class="col-md-10">
-          <input id="url" type="text" class="form-control" v-model="request.url"/>
+          <input type="text" class="form-control" v-model="request.url" placeholder="http://"/>
         </div>
       </div>
       <div class="form-group">
@@ -20,13 +20,13 @@
     </b-card>
     <div class="row">
       <div class="col-md-8">
-        <b-progress value="100" animated v-show="showProgress"/>
+        <b-progress :value="100" animated v-show="inProgress"/>
       </div>
       <div class="col-md-4">
-        <b-button type="submit" variant="primary" :disabled="disabled">
+        <b-button type="submit" variant="primary" :disabled="inProgress">
           <i class="fa fa-paper-plane-o"/> Call
         </b-button>
-        <b-button type="reset" variant="secondary" :disabled="disabled">
+        <b-button type="reset" variant="secondary" :disabled="inProgress">
           <i class="fa fa-undo"/> Reset
         </b-button>
       </div>
@@ -37,14 +37,6 @@
 <script>
 export default {
   props: ['request', 'inProgress'],
-  computed: {
-    showProgress () {
-      return this.inProgress
-    },
-    disabled () {
-      return this.inProgress
-    }
-  },
   data() {
     return {
       options: ['GET', 'POST', 'PUT', 'DELETE']

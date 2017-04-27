@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  props: ["calls"],
+  props: ['calls'],
   computed: {
     rCalls () {
       return [].concat(this.calls).reverse().splice(0, 20)
