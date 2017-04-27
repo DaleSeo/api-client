@@ -18,20 +18,33 @@
         <b-form-input id="text" textarea :rows="3" v-model="request.text"/>
       </div>
     </b-card>
-    <div class="text-right">
-      <b-button type="submit" variant="primary">
-        <i class="fa fa-paper-plane-o"/> Send
-      </b-button>
-      <b-button type="reset" variant="secondary">
-        <i class="fa fa-undo"/> Reset
-      </b-button>
+    <div class="row">
+      <div class="col-md-8">
+        <b-progress value="100" animated v-show="showProgress"/>
+      </div>
+      <div class="col-md-4">
+        <b-button type="submit" variant="primary" :disabled="disabled">
+          <i class="fa fa-paper-plane-o"/> Call
+        </b-button>
+        <b-button type="reset" variant="secondary" :disabled="disabled">
+          <i class="fa fa-undo"/> Reset
+        </b-button>
+      </div>
     </div>
   </form>
 </template>
 
 <script>
 export default {
-  props: ['request'],
+  props: ['request', 'inProgress'],
+  computed: {
+    showProgress () {
+      return this.inProgress
+    },
+    disabled () {
+      return this.inProgress
+    }
+  },
   data() {
     return {
       options: ['GET', 'POST', 'PUT', 'DELETE']
@@ -47,3 +60,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+</style>
