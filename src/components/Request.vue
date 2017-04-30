@@ -18,24 +18,29 @@
         <b-form-input id="text" textarea :rows="3" v-model="request.text"/>
       </div>
     </b-card>
-    <div class="row">
-      <div class="col-md-8">
-        <b-progress :value="100" animated v-show="inProgress"/>
-      </div>
-      <div class="col-md-4">
-        <b-button type="submit" variant="primary" :disabled="inProgress">
-          <i class="fa fa-paper-plane-o"/> Call
-        </b-button>
-        <b-button type="reset" variant="secondary" :disabled="inProgress">
-          <i class="fa fa-undo"/> Reset
-        </b-button>
-      </div>
+    <div class="text-right">
+      <b-button type="submit" variant="primary" :disabled="inProgress">
+        <i class="fa fa-paper-plane-o"/> Call
+      </b-button>
+      <b-button type="button" v-b-modal.modal variant="success" :disabled="inProgress">
+        <i class="fa fa-code"/> CURL
+      </b-button>
+      <b-button type="reset" variant="secondary" :disabled="inProgress">
+        <i class="fa fa-undo"/> Reset
+      </b-button>
     </div>
+    <div class="my-3">
+      <b-progress :value="100" animated v-show="inProgress"/>
+    </div>
+    <Curl id="modal" :request="request"/>
   </form>
 </template>
 
 <script>
+import Curl from './Curl.vue'
+
 export default {
+  components: {Curl},
   props: ['request', 'inProgress'],
   data() {
     return {

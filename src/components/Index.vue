@@ -8,7 +8,6 @@
           @send="send"
           @reset="reset"
         />
-        <br/>
         <Response
           :response="response"
         />
@@ -36,11 +35,7 @@ export default {
   },
   data () {
     return {
-      request: {
-        method: 'GET',
-        url: '',
-        text: ''
-      },
+      request: this.initRequest(),
       response: {},
       inProgress: false
     }
@@ -49,6 +44,13 @@ export default {
     calls: db.ref('calls')
   },
   methods: {
+    initRequest () {
+      return {
+        method: 'GET',
+        url: '',
+        text: ''
+      }
+    },
     send () {
       console.log('Index#send')
       if (this.request.text.trim()) {
@@ -83,6 +85,7 @@ export default {
     },
     reset () {
       console.log('Index#reset')
+      this.request = this.initRequest()
       this.response = {}
       toastr.success('Reset.')
     },
