@@ -26,9 +26,6 @@ import Response from './Response.vue'
 import History from './History.vue'
 
 import toastr from 'toastr'
-toastr.options = {
-  "positionClass": "toast-bottom-full-width"
-}
 
 import db from '../services/database'
 import callApi from '../services/callApi'

@@ -5,14 +5,19 @@
     </strong>
 
     <b-tabs small card ref="tabs" v-model="tabIndex" v-if="response.statusCode || response.error">
-      <b-tab title="Status">
+      <b-tab :title="response.error ? 'Error' : 'Status'">
         <span class="text-white bg-danger" v-if="response.error">{{errorMessage}}</span>
         <span :class="statusClass" v-else>{{response.statusCode}} {{response.statusMessage}}</span>
       </b-tab>
-      <b-tab title="Headers">
-        <pre>{{response.headers}}</pre>
+      <b-tab title="Headers" v-if="response.headers">
+        <dl>
+          <div v-for="(val, key) in response.headers">
+            <dt>{{key}}</dt>
+            <dd>{{val}}</dd>
+          </div>
+        </dl>
       </b-tab>
-      <b-tab title="Body">
+      <b-tab title="Body" v-if="response.body">
         <pre>{{response.body}}</pre>
       </b-tab>
     </b-tabs>
