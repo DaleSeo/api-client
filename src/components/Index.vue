@@ -47,6 +47,7 @@ export default {
     initRequest () {
       return {
         method: 'GET',
+        query: {q1: '123', q2: 'ABC', q3: '1 A+'},
         url: '',
         text: ''
       }
