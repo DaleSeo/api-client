@@ -47,7 +47,7 @@ export default {
     initRequest () {
       return {
         method: 'GET',
-        query: {q1: '123', q2: 'ABC', q3: '1 A+'},
+        queries: [],
         url: '',
         text: ''
       }
@@ -92,7 +92,7 @@ export default {
     },
     selectCall (call) {
       console.log('Index#selectCall', call)
-      this.request = Object.assign({}, call.req)
+      this.request = Object.assign(this.initRequest(), call.req)
       this.response = Object.assign({}, call.res)
     },
     createCall (call) {

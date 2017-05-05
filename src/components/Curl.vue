@@ -5,21 +5,18 @@
     :hide-footer="true"
     :close-on-backdrop="false"
   >
-    <div class="bg-faded">
-      {{curlText}}
-    </div>
+    <b-form-input textarea :rows="10" :value="curl"/>
   </b-modal>
 </template>
 
 <script>
+import buildCurl from '../services/buildCurl'
+
 export default {
   props: ["inProgress", "id", "request"],
   computed: {
-    curlText () {
-      let curl = 'curl ' + this.request.url
-      curl += ' -X ' + this.request.method
-      curl += ` -d '${this.request.text}'`
-      return curl
+    curl () {
+      return buildCurl(this.request)
     }
   }
 }

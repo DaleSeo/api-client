@@ -14,19 +14,7 @@
         </div>
       </div>
 
-      <div class="form-group">
-      <label>
-        Query String
-      </label>
-        <div class="row" v-for="query in queries">
-          <div class="col-sm-4">
-            <b-form-input :value="query.key"/>
-          </div>
-          <div class="col-sm-8">
-            <b-form-input :value="query.val"/>
-          </div>
-        </div>
-      </div>
+      <RequestQueries :queries="request.queries"/>
 
       <b-form-fieldset label="Body">
         <b-form-input textarea :rows="3" v-model="request.text"/>
@@ -52,18 +40,13 @@
 </template>
 
 <script>
+import _ from 'lodash'
+import RequestQueries from './RequestQueries.vue'
 import Curl from './Curl.vue'
 
 export default {
-  components: {Curl},
+  components: {RequestQueries, Curl},
   props: ['request', 'inProgress'],
-  computed: {
-    queries () {
-      return Object.keys(this.request.query).map(key => {
-        return {key: key, val: this.request.query[key]}
-      })
-    }
-  },
   data() {
     return {
       options: ['GET', 'POST', 'PUT', 'DELETE']
