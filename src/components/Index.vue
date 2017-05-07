@@ -36,7 +36,7 @@ export default {
   data () {
     return {
       request: this.initRequest(),
-      response: {},
+      response: this.initResponse(),
       inProgress: false
     }
   },
@@ -48,20 +48,24 @@ export default {
       return {
         method: 'GET',
         queries: [],
-        url: '',
+        headers: [],
+        url: 'http://',
+        text: ''
+      }
+    },
+    initResponse () {
+      return {
+        statusCode: '',
+        statusMessage: '',
+        headers: {},
+        body: {},
         text: ''
       }
     },
     send () {
       console.log('Index#send')
-      if (this.request.text.trim()) {
-        try {
-          this.request.body = JSON.parse(this.request.text)
-        } catch (err) {
-          return window.alert(err)
-        }
-      }
       this.inProgress = true
+      this.response = this.initResponse()
       callApi(this.request)
         .then(response => {
           console.log('response:', response)

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="row mb-1" href="#" v-if="queries" v-for="(query, index) in queries">
+    <div class="row mb-1" href="#" v-if="headers" v-for="(header, index) in headers">
       <div class="col-sm-3 pr-1">
-        <b-form-input size="sm" v-model="query.key"/>
+        <b-form-input size="sm" v-model="header.key"/>
       </div>
       <div class="col-sm-8 pl-1 pr-0">
-        <b-form-input size="sm" v-model="query.value"/>
+        <b-form-input size="sm" v-model="header.value"/>
       </div>
       <div class="col-sm-1 pl-0">
         <button type="button" class="close" @click="del(index)">&times;</button>
@@ -17,15 +17,15 @@
 
 <script>
 export default {
-  props: ['queries'],
+  props: ['headers'],
   methods: {
     add () {
-      console.log('RequestQueries.vue#add()')
-      this.queries.push({key: '', value: ''})
+      console.log('RequestHeaders.vue#add()')
+      this.headers.push({key: '', value: ''})
     },
     del (index) {
-      console.log('RequestQueries.vue#del()', index)
-      this.queries.splice(index, 1)
+      console.log('RequestHeaders.vue#del()', index)
+      this.headers.splice(index, 1)
     }
   }
 }
