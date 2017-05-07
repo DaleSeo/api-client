@@ -1,35 +1,49 @@
 import superagent from 'superagent'
 
-export default function callApi (req) {
-  let queries = arrayToObj(req.queries)
-  let headers = arrayToObj(req.headers)
-  console.log('queries:', queries)
-  console.log('headers:', headers)
-  return superagent.post('https://call-api.herokuapp.com')
-    .send(req)
-    .query(queries)
-    .set(headers)
-    .then(response => {
-      console.log('response.body:', response.body)
-      return response.body
-    })
-    .then(response => {
-      return {
-        statusCode: response.statusCode,
-        statusMessage: response.statusMessage,
-        headers: response.headers,
-        body: response.body,
-        text: response.text
-      }
-    })
-    .catch(error => {
-      console.log('error.response:', error.response)
-      if (error.response.body.error) {
-        return {error: error.response.body.error}
-      } else {
-        throw error
-      }
-    })
+const endPoint = process.env.endPoint || 'https://call-api.herokuapp.com'
+// const endPoint = 'http://localhost:3000'
+
+export default function callApi (request) {
+  let req = Object.assign({}, request)
+  console.log('req:', req)
+  return new Promise((resolve, reject) => {
+    if (req.text.trim()) {
+      req.body = JSON.parse(req.text)
+    }
+    resolve(req)
+  })
+  .catch(error => {
+    console.log('error:', error)
+    throw error
+  })
+  .then(req => {
+    req.queries = arrayToObj(req.queries)
+    req.headers = arrayToObj(req.headers)
+    return req
+  })
+  .then(req => superagent.post(endPoint).send(req))
+  .then(response => {
+    console.log('response.body:', response.body)
+    return response.body
+  })
+  .then(response => {
+    return {
+      statusCode: response.statusCode,
+      statusMessage: response.statusMessage,
+      headers: response.headers,
+      body: response.body,
+      text: response.text
+    }
+  })
+  .catch(error => {
+    if (error.response && error.response.body.error) {
+      console.log('error.response.body.error:', error.response.body.error)
+      throw new Error(error.response.body.error.code)
+    } else {
+      console.log('error:', error)
+      throw error
+    }
+  })
 }
 
 function arrayToObj (array) {

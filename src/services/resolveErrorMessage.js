@@ -1,8 +1,12 @@
 export default function resolveErrorMessage (error) {
-  if (error.code === 'ENOTFOUND') {
+  if (error.name === 'SyntaxError') {
+    return 'Invalid JSON format.'
+  }
+
+  if (error.message === 'ENOTFOUND') {
     return 'The url is not found.'
-  } else if (error.code === 'ECONNREFUSED') {
-    return 'The connection refused'
+  } else if (error.message === 'ECONNREFUSED') {
+    return 'The connection refused.'
   }
   return 'Unknown.'
 }

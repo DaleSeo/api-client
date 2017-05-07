@@ -9,6 +9,7 @@
           @reset="reset"
         />
         <Response
+          v-if="response.statusCode"
           :response="response"
         />
       </div>
@@ -28,6 +29,8 @@ import toastr from 'toastr'
 
 import db from '../services/database'
 import callApi from '../services/callApi'
+
+import resolveErrorMessage from '../services/resolveErrorMessage'
 
 export default {
   components: {
@@ -69,11 +72,7 @@ export default {
       callApi(this.request)
         .then(response => {
           console.log('response:', response)
-          if (response.error) {
-            toastr.error('Failed to call!')
-          } else {
-            toastr.success('Successfully called.')
-          }
+          toastr.success('Successfully called.')
           this.response = response
           let call = {
             date: new Date().getTime(),
@@ -81,12 +80,12 @@ export default {
             res: this.response
           }
           this.createCall(call)
-          this.inProgress = false
         })
         .catch(err => {
           console.error('err:', err)
-          window.alert(err)
+          toastr.error(resolveErrorMessage(err), 'Failed to call!')
         })
+        .then(_ => this.inProgress = false)
     },
     reset () {
       console.log('Index#reset')
