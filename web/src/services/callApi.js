@@ -1,8 +1,5 @@
 import superagent from 'superagent'
 
-const endPoint = process.env.endPoint || 'https://call-api.herokuapp.com'
-// const endPoint = 'http://localhost:3000'
-
 export default function callApi (request) {
   let req = Object.assign({}, request)
   console.log('req:', req)
@@ -21,7 +18,7 @@ export default function callApi (request) {
     req.headers = arrayToObj(req.headers)
     return req
   })
-  .then(req => superagent.post(endPoint).send(req))
+  .then(req => superagent.post('/').send(req))
   .then(response => {
     console.log('response.body:', response.body)
     return response.body
