@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container" onsubmit="submit(event)">
+    <h1>API Caller</h1>
+    <form>
+      <input type="text" id="method" class="form-control" value="GET">
+      <br/>
+      <input type="text" id="url" class="form-control" value="http://jsonplaceholder.typicode.com/posts/1"/>
+      <br/>
+      <textarea id="body" rows="10" class="form-control">{"a":1}</textarea>
+      <br/>
+      <input class="btn btn-primary" type="submit"/>
+    </form>
+    <hr/>
+    <pre id="res_status">
+    </pre>
+    <pre id="res_headers">
+    </pre>
+    <pre id="res_body">
+    </pre>
+    <pre id="error">
+    </pre>
+  </div>
+  <script>
+    function submit(event) {
+      console.log('#submit')
+      event.preventDefault()
+      var method = $('#method').val()
+      var url = $('#url').val()
+      var body = $('#body').val()
+      console.log(method, url, body)
+      callApi(method, url, body)
+        .then(res => {
+          console.log('res:', res)
+          $('#res_status').text(res.statusCode + res.statusMessage)
+          $('#res_headers').text(JSON.stringify(res.headers, null, 2))
+          $('#res_body').text(JSON.stringify(res.body, null, 2))
+        })
+        .catch((err, err2) => {
+          console.error('err:', err)
+          $('#error').text(JSON.stringify(err, null, 2))
+        })
+    }
+
+    function callApi(method, url, body) {
+      console.log('#callApi')
+      let req = {method, url, body}
+      console.log('req:', req)
+      return $.ajax({
+        method: 'POST',
+        url: '/',
+        data: JSON.stringify(req),
+        contentType: 'application/json',
+        datatype: 'json'
+      })
+    }
+  </script>
+</body>
+</html>
