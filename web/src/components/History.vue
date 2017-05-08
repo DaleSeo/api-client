@@ -3,8 +3,11 @@
     <strong slot="header">
       History <small v-if="calls">({{calls.length}})</small>
     </strong>
-    <b-list-group flush>
-      <b-list-group-item href="#" :title="call.date" :key="call['.key']" v-for="call in rCalls">
+    <div class="text-center py-5" v-show="loading">
+      <i class="fa fa-spinner fa-spin fa-3x fa-fw"/>
+    </div>
+    <b-list-group flush v-show="!loading">
+      <b-list-group-item href="#" :title="call.date" :key="call._id" v-for="call in calls">
         <b-badge pill :variant="variant(call.req.method)">{{call.req.method}}</b-badge>
         <span>&nbsp;<em @click="select(call)">{{call.req.url}}</em></span>
         <button type="button" class="close float-right" @click="remove(call)">&times;</button>
@@ -15,11 +18,9 @@
 
 <script>
 export default {
-  props: ['calls'],
-  computed: {
-    rCalls () {
-      return [].concat(this.calls).reverse().splice(0, 20)
-    }
+  props: ['calls', 'loading'],
+  data () {
+    return {}
   },
   methods: {
     variant (method) {

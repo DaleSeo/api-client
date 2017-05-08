@@ -14,20 +14,25 @@
         />
       </div>
       <div class="col-md-5">
-        <History :calls="calls" @select="selectCall" @remove="removeCall"/>
+        <History
+          :calls="calls"
+          :loading="loading"
+          @select="selectCall"
+          @remove="removeCall"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import superagent from 'superagent'
+import toastr from 'toastr'
+
 import Request from './Request.vue'
 import Response from './Response.vue'
 import History from './History.vue'
 
-import toastr from 'toastr'
-
-import db from '../services/database'
 import callApi from '../services/callApi'
 
 import resolveErrorMessage from '../services/resolveErrorMessage'
@@ -40,11 +45,13 @@ export default {
     return {
       request: this.initRequest(),
       response: this.initResponse(),
-      inProgress: false
+      inProgress: false,
+      loading: false,
+      calls: []
     }
   },
-  firebase: {
-    calls: db.ref('calls')
+  created () {
+    this.findCalls()
   },
   methods: {
     initRequest () {
@@ -98,15 +105,32 @@ export default {
       this.request = Object.assign(this.initRequest(), call.req)
       this.response = Object.assign({}, call.res)
     },
+    findCalls () {
+      console.log('Index.vue#findCalls()')
+      this.loading = true
+      superagent.get('/calls')
+        .then(res => {
+          this.calls = res.body
+        })
+        .catch(err => {
+          toastr.error(err)
+        })
+        .then(_ => this.loading = false)
+    },
     createCall (call) {
-      console.log('Index#createCall', call)
-      this.$firebaseRefs.calls.push(call)
+      console.log('Index.vue#createCall', call)
+      superagent.post('/calls')
+        .send(call)
+        .then(_ => null)
+        .catch(err => toastr.error(err))
+        .then(this.findCalls)
     },
     removeCall (call) {
-      console.log('Index#removeCall', call)
-      this.$firebaseRefs.calls.child(call['.key']).remove()
-        .then(_ => toastr.success('Removed.'))
+      console.log('Index.vue#removeCall', call)
+      superagent.delete('/calls/' + call._id)
+        .then(_ => toastr.success('Removed'))
         .catch(err => toastr.error(err))
+        .then(this.findCalls)
     }
   }
 }
