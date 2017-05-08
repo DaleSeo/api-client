@@ -72,11 +72,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.vcenter {
-  display: inline-block;
-  vertical-align: middle;
-  float: none;
-}
-</style>

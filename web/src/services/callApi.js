@@ -1,4 +1,5 @@
 import superagent from 'superagent'
+import utils from './utils'
 
 export default function callApi (request) {
   let req = Object.assign({}, request)
@@ -14,8 +15,8 @@ export default function callApi (request) {
     throw error
   })
   .then(req => {
-    req.queries = arrayToObj(req.queries)
-    req.headers = arrayToObj(req.headers)
+    req.queries = utils.arrayToObj(req.queries)
+    req.headers = utils.arrayToObj(req.headers)
     return req
   })
   .then(req => superagent.post('/').send(req))
@@ -41,11 +42,4 @@ export default function callApi (request) {
       throw error
     }
   })
-}
-
-function arrayToObj (array) {
-  return array.reduce((prev, curr) => {
-    prev[curr.key] = curr.value
-    return prev
-  }, {})
 }

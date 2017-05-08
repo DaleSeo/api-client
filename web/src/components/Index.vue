@@ -77,10 +77,10 @@ export default {
       this.inProgress = true
       this.response = this.initResponse()
       callApi(this.request)
-        .then(response => {
-          console.log('response:', response)
+        .then(res => {
+          console.log('res:', res)
           toastr.success('Successfully called.')
-          this.response = response
+          this.response = res
           let call = {
             date: new Date().getTime(),
             req: this.request,
@@ -119,6 +119,7 @@ export default {
     },
     createCall (call) {
       console.log('Index.vue#createCall', call)
+      this.loading = true
       superagent.post('/calls')
         .send(call)
         .then(_ => null)
@@ -127,6 +128,7 @@ export default {
     },
     removeCall (call) {
       console.log('Index.vue#removeCall', call)
+      this.loading = true
       superagent.delete('/calls/' + call._id)
         .then(_ => toastr.success('Removed'))
         .catch(err => toastr.error(err))

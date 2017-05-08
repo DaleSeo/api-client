@@ -13,7 +13,7 @@
 import buildCurl from '../services/buildCurl'
 
 export default {
-  props: ["inProgress", "id", "request"],
+  props: ["id", "request"],
   computed: {
     curl () {
       return buildCurl(this.request)
