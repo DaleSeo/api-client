@@ -5,8 +5,8 @@
       <b-link class="navbar-brand" to="#">
         <i class="fa fa-paper-plane"></i>
         <strong>CHECK APIS</strong>
-        &nbsp;&nbsp;&nbsp;
-        <small>Make API calls Online.</small>
+        &nbsp;&nbsp;
+        <small>Make API Calls Online</small>
       </b-link>
     </div>
   </b-navbar>
