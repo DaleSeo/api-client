@@ -1,31 +1,33 @@
 <template>
-  <form @submit.prevent="send" @reset="reset">
-    <b-card no-block showHeader class="mb-3">
-      <strong slot="header">
-        <i class="fa fa-arrow-circle-right"/> Request
-      </strong>
+  <div>
+    <form @submit.prevent="send" @reset="reset">
+      <b-card no-block showHeader class="mb-3">
+        <strong slot="header">
+          <i class="fa fa-arrow-circle-right"/> Request
+        </strong>
 
-      <div class="form-group row mx-0 my-3">
-        <div class="col-sm-2 pr-0">
-          <b-form-select v-model="request.method" :options="options"/>
+        <div class="form-group row mx-0 my-3">
+          <div class="col-sm-2 pr-0">
+            <b-form-select v-model="request.method" :options="options"/>
+          </div>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" v-model="request.url"/>
+          </div>
         </div>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" v-model="request.url"/>
-        </div>
-      </div>
 
-      <b-tabs small card ref="tabs" v-model="tabIndex">
-        <b-tab title="Queries">
-          <RequestQueries :queries="request.queries"/>
-        </b-tab>
-        <b-tab title="Headers">
-          <RequestHeaders :headers="request.headers"/>
-        </b-tab>
-        <b-tab title="Body">
-          <b-form-input textarea :rows="3" v-model="request.text"/>
-        </b-tab>
-      </b-tabs>
-    </b-card>
+        <b-tabs small card ref="tabs" v-model="tabIndex">
+          <b-tab title="Queries">
+            <RequestQueries :queries="request.queries"/>
+          </b-tab>
+          <b-tab title="Headers">
+            <RequestHeaders :headers="request.headers"/>
+          </b-tab>
+          <b-tab title="Body">
+            <b-form-input textarea :rows="3" v-model="request.text"/>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+    </form>
 
     <div class="text-right">
       <b-button type="submit" variant="primary" :disabled="inProgress">
@@ -44,7 +46,7 @@
     </div>
 
     <Curl id="modal" :request="request"/>
-  </form>
+  </div>
 </template>
 
 <script>
