@@ -1,0 +1,9 @@
+language: node_js
+node_js: '7'
+deploy:
+  provider: heroku
+  api_key:
+    secure: SAoOhHOi5esylao5XPb5kMdq17obSDGIuH9NIoLBNmb3bBvoQ4aD5PoVaW74trNnGFKHdGhe4kXtjTHmCWZQFYYfEGAvl3CahjsHw7wLZVq0wAiJ5pdaI/uXuXsH2GigmburP4tbHjGmpScS+Jyu9pX0olrz6WWHyiXvX11BLYAjmCQNucHzMEIVW9PL/C/Q2O+NI37Wf/fc6BnuGL0ahmrK4o0xT4RNOF3Phn2mVOS4FWLmJhAQy3RmAaiMxdDayLiz11u7R52YkZ3fPQx3+FSfFNqXWT2ZZ/17z78G1tZciRhsSwbuMgBYiN47qwF2ehkOt9U8bLhHxCTH9SxVpXzBUYEDYbtCFHNQb8i8Mi7hgNpGmha5Os858LwvgggerquWaIN/Wy/Sta9ByUicfSEBs5VNdQBDquNbmNsdwpkE8f/68NRqGECHT6oWDHm23xsjxK9+eQSFHJwqH93NOggrQ5d+kWG+5P7J9/V5+vfQMoYL2/Ly/jJi4T/IKb3GYNLRGx4odwawR7bV1S1yyqLnAMcKc+MDEgEF9wnUs910dIBi1fTCLRjtUxR34mNtw3m+Ue3ZbWPzNVMI2WaHJdJ+DDxqxPRlcgsbjh93YyYjJolQs2p1+rAwCHxz52SSDyKnWE3eRWbuq8Vj5nn8QEoTfXUoosRZXOkl8vEUE3w=
+  app: tryapis
+  on:
+    repo: DaleSeo/tryapis
