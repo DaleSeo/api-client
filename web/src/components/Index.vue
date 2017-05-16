@@ -5,7 +5,7 @@
         <Request
           :request="request"
           :inProgress="inProgress"
-          @send="send"
+          @call="call"
           @reset="reset"
         />
         <Response
@@ -72,8 +72,8 @@ export default {
         text: ''
       }
     },
-    send () {
-      console.log('Index#send')
+    call () {
+      console.log('Index#call')
       this.inProgress = true
       this.response = this.initResponse()
       callApi(this.request)

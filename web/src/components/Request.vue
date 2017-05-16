@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="send" @reset="reset">
+    <form @submit.prevent="call" @reset="reset">
       <b-card no-block showHeader class="mb-3">
         <strong slot="header">
           <i class="fa fa-arrow-circle-right"/> Request
@@ -27,19 +27,19 @@
           </b-tab>
         </b-tabs>
       </b-card>
-    </form>
 
-    <div class="text-right">
-      <b-button type="submit" variant="primary" :disabled="inProgress">
-        <i class="fa fa-paper-plane-o"/> Call
-      </b-button>
-      <b-button type="button" v-b-modal.modal variant="success" :disabled="inProgress">
-        <i class="fa fa-code"/> CURL
-      </b-button>
-      <b-button type="reset" variant="secondary" :disabled="inProgress">
-        <i class="fa fa-undo"/> Reset
-      </b-button>
-    </div>
+      <div class="text-right">
+        <b-button type="submit" variant="primary" :disabled="inProgress">
+          <i class="fa fa-paper-plane-o"/> Call
+        </b-button>
+        <b-button type="button" v-b-modal.modal variant="success" :disabled="inProgress">
+          <i class="fa fa-code"/> CURL
+        </b-button>
+        <b-button type="reset" variant="secondary" :disabled="inProgress">
+          <i class="fa fa-undo"/> Reset
+        </b-button>
+      </div>
+    </form>
 
     <div class="my-3">
       <b-progress :value="100" animated v-show="inProgress"/>
@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import RequestQueries from './RequestQueries.vue'
 import RequestHeaders from './RequestHeaders.vue'
 import Curl from './Curl.vue'
@@ -65,8 +64,8 @@ export default {
     }
   },
   methods: {
-    send () {
-      this.$emit('send')
+    call () {
+      this.$emit('call')
     },
     reset () {
       this.$emit('reset')
